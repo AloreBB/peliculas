@@ -24,11 +24,14 @@ class HomeScreen extends StatelessWidget {
               CardSwiper(),
         
               // Slider de películas
+              MovieSlider(title: 'Populares'),
+              MovieSlider(),
               MovieSlider(),
         
               // Listado horizontal películas
             ],
           ),
-        ));
+        )
+      );
   }
 }
