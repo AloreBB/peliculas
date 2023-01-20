@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter/material.dart';
-
 class CastingCards extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -30,7 +28,7 @@ class _CastCard extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(20),
             child: FadeInImage(
-              placeholder: AssetImage('assets/no-image.jpg'), 
+              placeholder: const AssetImage('assets/no-image.jpg'), 
               image: NetworkImage('https://via.placeholder.com/150x300'),
               height: 140,
               width: 100,
