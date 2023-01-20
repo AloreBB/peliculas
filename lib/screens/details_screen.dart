@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:peliculas/widgets/widgets.dart';
 
 class DetailsScreen extends StatelessWidget {
   const DetailsScreen({super.key});
@@ -16,7 +17,12 @@ class DetailsScreen extends StatelessWidget {
           _CustomAppBar(),
           SliverList(
             delegate: SliverChildListDelegate([
-              _PosterAndTitles()
+              _PosterAndTitles(),
+              _Overview(),
+              _Overview(),
+              _Overview(),
+              _Overview(),
+              CastingCards(),
             ])
           )
         ],
@@ -41,6 +47,7 @@ class _CustomAppBar extends StatelessWidget {
         title: Container(
           width: double.infinity,
           alignment: Alignment.bottomCenter,
+          padding: const EdgeInsets.only( bottom: 10 ),
           color: Colors.black12,
           child: const Text(
             'movie-title',
@@ -61,6 +68,9 @@ class _PosterAndTitles extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final textTheme = Theme.of(context).textTheme;
+
     return Container(
       margin: const EdgeInsets.only( top: 20 ),
       padding: const EdgeInsets.symmetric( horizontal: 20 ),
@@ -75,9 +85,50 @@ class _PosterAndTitles extends StatelessWidget {
             ),
           ),
 
-          SizedBox( width: 20)
+          const SizedBox( width: 20 ),
 
+          Container(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'movie.title', 
+                  style: textTheme.headline5,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 2,
+                ),
+                Text(
+                  'movie.originalTitle', 
+                  style: textTheme.headline5,
+                  overflow: TextOverflow.ellipsis,
+                ),
+
+                Row(
+                  children: [
+                    const Icon( Icons.star_outline, size: 15, color: Colors.grey ),
+                    const SizedBox( width: 5 ),
+                    Text('movie.voteAverage', style: textTheme.caption)
+                  ],
+                )
+              ],
+            ),
+          )
         ],
+      ),
+    );
+  }
+}
+
+class _Overview extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric( horizontal: 30, vertical: 10 ),
+      child: Text(
+        'Lorem ipsum ex irure non eiusmod Lorem reprehenderit nulla mollit ea nulla commodo.',
+        textAlign: TextAlign.justify,
+        style: Theme.of(context).textTheme.subtitle1,
       ),
     );
   }
