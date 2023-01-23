@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -22,8 +21,7 @@ class MoviesProvider extends ChangeNotifier {
         'api_key': _apiKey,
         'language': _language,
         'page': '1'
-        }
-      );
+    });
 
     // Await the http get response, then decode the json-formatted response.
     final response = await http.get(url);
