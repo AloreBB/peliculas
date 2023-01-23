@@ -9,7 +9,6 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final moviesPovider = Provider.of<MoviesProvider>(context);
 
     return Scaffold(
@@ -25,17 +24,17 @@ class HomeScreen extends StatelessWidget {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              
               // Tarjetas principales
-              CardSwiper( movies: moviesPovider.onDisplayMovies ),
-            
-              // Slider de 
+              CardSwiper(movies: moviesPovider.onDisplayMovies),
+
+              // Slider de
               // películas
-              MovieSlider(title: 'Populares'),        
-              // Listado horizontal películas
+              MovieSlider(
+                movies: moviesPovider.popularMovies,
+                title: 'Populares!',
+              ), // Listado horizontal películas
             ],
           ),
-        )
-      );
+        ));
   }
 }
