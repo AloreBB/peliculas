@@ -65,7 +65,7 @@ class _MovieSliderState extends State<MovieSlider> {
                 widget.title!,
                 style:
                     const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
+              ),    
             ),
           const SizedBox(height: 5),
           Expanded(
