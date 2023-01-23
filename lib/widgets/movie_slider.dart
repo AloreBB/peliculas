@@ -2,16 +2,46 @@ import 'package:flutter/material.dart';
 
 import 'package:peliculas/models/models.dart';
 
-class MovieSlider extends StatelessWidget {
+class MovieSlider extends StatefulWidget {
 
   final String? title;
   final List<Movie> movies;
+  final Function onNextPage;
 
   const MovieSlider({
     super.key, 
+    required this.movies, 
+    required this.onNextPage,
     this.title, 
-    required this.movies
   });
+
+  @override
+  State<MovieSlider> createState() => _MovieSliderState();
+}
+
+class _MovieSliderState extends State<MovieSlider> {
+
+  final ScrollController scrollController = new ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+
+    scrollController.addListener(() {
+
+      if (scrollController.position.pixels >= scrollController.position.maxScrollExtent - 500) {
+        // TODO: llamar el provider
+        widget.onNextPage();
+      }
+
+    });
+
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,11 +58,11 @@ class MovieSlider extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         children: [
 
-          if( title != null )
+          if( widget.title != null )
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Text(
-                title!,
+                widget.title!,
                 style:
                     const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
@@ -40,9 +70,10 @@ class MovieSlider extends StatelessWidget {
           const SizedBox(height: 5),
           Expanded(
             child: ListView.builder(
+              controller: scrollController,
               scrollDirection: Axis.horizontal,
-              itemCount: movies.length,
-              itemBuilder: ( _, index) => _MoviePoster(movie: movies[index]),
+              itemCount: widget.movies.length,
+              itemBuilder: ( _, index) => _MoviePoster(movie: widget.movies[index]),
             ),
           )
         ],

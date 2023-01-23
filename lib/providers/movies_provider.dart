@@ -38,7 +38,6 @@ class MoviesProvider extends ChangeNotifier {
 
     onDisplayMovies = nowPlayingResponse.results;
     notifyListeners();
-
   }
 
   getPopularMovies() async {
@@ -49,9 +48,7 @@ class MoviesProvider extends ChangeNotifier {
     final popularResponse = PopularResponse.fromJson(jsonData);
 
     popularMovies = [ ...popularMovies, ...popularResponse.results];
-    print(popularMovies);
     notifyListeners();
-
   }
 
 }
