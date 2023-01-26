@@ -39,6 +39,8 @@ class _CustomAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
+      leading: IconButton(onPressed: () =>  Navigator.pop(context), 
+      icon: const Icon( Icons.arrow_back_outlined, color: Colors.white ) ),
       backgroundColor: Colors.indigo,
       expandedHeight: 200,
       floating: false,
@@ -50,10 +52,20 @@ class _CustomAppBar extends StatelessWidget {
           width: double.infinity,
           alignment: Alignment.bottomCenter,
           padding: const EdgeInsets.only( bottom: 10,left: 10, right: 10 ),
-          color: Colors.black12,
+          color: Colors.black38,
           child: Text(
             movie.title,
-            style: const TextStyle( fontSize: 16 ),
+            style: TextStyle( 
+              fontSize: 16, 
+              fontWeight: FontWeight.bold,
+              shadows: [
+                Shadow(
+                blurRadius: 10.0,
+                color: Colors.black,
+                offset: Offset.fromDirection(8)
+                )
+              ]
+            ),
             textAlign: TextAlign.center,
           ),
         ),

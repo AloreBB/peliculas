@@ -5,8 +5,7 @@ import 'package:flutter/material.dart';
 class MovieSearchDelegate extends SearchDelegate {
 
   @override
-  // TODO: implement searchFieldLabel
-  String? get searchFieldLabel => 'Buscar película';
+  String get searchFieldLabel => 'Buscar película';
 
   @override
   List<Widget>? buildActions(BuildContext context) {
@@ -30,17 +29,15 @@ class MovieSearchDelegate extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
-    return Text('buildResults');
+    return Text(query);
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
     
     if( query.isEmpty) {
-      return Container(
-        child: Center(
-          child: Icon( Icons.movie_creation_outlined, color: Colors.black38, size: 100,),
-        ),
+      return const Center(
+        child: Icon( Icons.movie_creation_outlined, color: Colors.black38, size: 100,),
       );
     }
 
