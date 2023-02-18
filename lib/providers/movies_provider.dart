@@ -1,6 +1,9 @@
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:peliculas/helpers/debouncer.dart';
 import 'package:peliculas/models/models.dart';
 import 'package:peliculas/models/search_movies_response.dart';
 
@@ -14,13 +17,23 @@ class MoviesProvider extends ChangeNotifier {
   List<Movie> popularMovies = [];
   
   Map<int, List<Cast>> movieCast = {};
+  Map<String, List<Movie>> suggestMovies = {};
 
   int _popularPage = 0;
 
+  final debouncer = Debouncer(
+    duration: const Duration(milliseconds: 500),
+  );
+
+  final StreamController<List<Movie>> _suggestionStreamController = StreamController.broadcast();
+  Stream<List<Movie>> get suggestionStream => this._suggestionStreamController.stream;
+
   MoviesProvider() {
+
     print('MoviesProvider inicializado');
     getOnDisplayMovies();
     getPopularMovies();
+    
   }
 
   Future <String> _getJsonData(String endpoint, [int page = 1] ) async {
@@ -68,6 +81,9 @@ class MoviesProvider extends ChangeNotifier {
   }
 
   Future<List<Movie>> searchMovies( String query ) async {
+
+    if( suggestMovies.containsKey(query) ) return suggestMovies[query]!;
+
     final url = Uri.https(_baseUrl, '3/search/movie', {
         'api_key': _apiKey,
         'language': _language,
@@ -77,7 +93,26 @@ class MoviesProvider extends ChangeNotifier {
     final response = await http.get(url);
     final searchMovie = SearchMovieResponse.fromJson( response.body );
     
+    suggestMovies[query] = searchMovie.results;
+
     return searchMovie.results;
+  }
+
+  void getSuggestionByQuery( String searchTerm ) {
+
+     debouncer.value = '';
+     debouncer.onValue = ( value ) async {
+      // print('Tenemos valor a buscar: $value');
+      final results = await this.searchMovies( value ); 
+      this._suggestionStreamController.add( results );
+     };
+
+     final timer = Timer.periodic( const Duration( milliseconds: 300 ), ( _ ) {
+      debouncer.value = searchTerm;
+     });
+
+     Future.delayed(Duration(milliseconds: 301)).then((value) => timer.cancel());
+
   }
 
 }

@@ -99,7 +99,7 @@ class _PosterAndTitles extends StatelessWidget {
       child: Row(
         children: [
           Hero(
-            tag: movie.id,
+            tag: movie.heroId!,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20),
               child: FadeInImage(
